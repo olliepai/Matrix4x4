@@ -1,26 +1,47 @@
+#include <stdio.h>
 #include "mat4.h"
 
 // This constructor initializes the 2d float array with v along
 // the diagnal [(0, 0), (1, 1), (2, 2), (3, 3)]. The rest of
 // the matrix will be zeros.
 mat4::mat4(float v){
-
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (i == j) {
+                this->m[i][j] = v;
+            } else {
+                this->m[i][j] = 0;
+            }
+        }
+    }
 }
 
 // Copy Constructor. Initilaizes this matrix with the values of the
 // passed in matrix.
 mat4::mat4(mat4& m){
-    
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            this->m[i][j] = m.m[i][j];
+        }
+    }
 }
 
 // Adds the values of m to this matrix.
 void mat4::add(mat4 m){
-
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            this->m[i][j] = this ->m[i][j] + m.m[i][j];
+        }
+    }
 }
 
 // Subtracts the values of m from this matrix
 void mat4::subtract(mat4 m){
-
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            this->m[i][j] = this ->m[i][j] - m.m[i][j];
+        }
+    }
 }
 
 // Multiplies this matrix and m together.
@@ -28,23 +49,51 @@ void mat4::subtract(mat4 m){
 // go to this site for an introduction:
 // https://www.mathsisfun.com/algebra/matrix-multiplying.html
 void mat4::multiply(mat4 m){
+    mat4 result(m);
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            int dotProduct = 0;
+            for (int j2 = 0; j2 < 4; j2++) {
+                for (int i2 = 0; i2 < 4; i2++) {
+                    dotProduct = dotProduct + this->m[i][j2] * m.m[i2][j];
+                }
+            }
+            result.m[i][j] = dotProduct;
+        }
+    }
 
+    for (int i = 0; i < 4; i++) {
+        for (int j; j < 4; j++) {
+
+        }
+    }
 }
 
 // Multiplies m1 and m2 and returns the result.
 mat4 mat4::multiply(mat4 m1, mat4 m2){
-    mat4 m;
-    return m;
+    m1.multiply(m2);
+    return m1;
 }
 
 // Adds m1 and m2 and returns the result.
 mat4 mat4::add(mat4 m1, mat4 m2){
-    mat4 m;
-    return m;
+    m1.add(m2);
+    return m1;
 }
 
 // subtracts m2 from m1 and returns the result.
 mat4 mat4::subtract(mat4 m1, mat4 m2){
-    mat4 m;
-    return m;
+    m1.subtract(m2);
+    return m1;
+}
+
+void mat4::print() {
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            printf("%f ", this->m[i][j]);
+        }
+        printf("\n");
+    }
+
+    printf("\n");
 }

@@ -18,4 +18,7 @@ struct mat4 {
     static mat4 add(mat4 m1, mat4 m2);
     static mat4 subtract(mat4 m1, mat4 m2);
     static mat4 multiply(mat4 m1, mat4 m2);
+
+    //print matrix
+    void print();
 };
